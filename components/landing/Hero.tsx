@@ -11,13 +11,8 @@ import {
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden min-h-screen bg-[#050816] text-white">
+    <section id = "home" className="relative overflow-hidden px-6 py-32">
 
-      {/* Background Glow */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-0 h-[700px] w-[700px] -translate-x-1/2 rounded-full bg-cyan-500/20 blur-[180px]" />
-        <div className="absolute bottom-0 right-0 h-[500px] w-[500px] rounded-full bg-blue-600/20 blur-[150px]" />
-      </div>
 
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-20 px-6 pt-40 pb-12 lg:flex-row">
 

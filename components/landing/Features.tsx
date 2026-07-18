@@ -59,7 +59,7 @@ const HOVER_SPRING = { type: "spring", stiffness: 260, damping: 24, mass: 0.9 } 
 
 export default function Features() {
   return (
-    <section id="features" className="relative overflow-hidden bg-[#050816] pt-16 pb-32 text-white">
+    <section id="features" className="relative overflow-hidden px-6 py-32">
       {/* Background Glow */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute left-1/2 top-0 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-cyan-500/10 blur-[170px]" />
