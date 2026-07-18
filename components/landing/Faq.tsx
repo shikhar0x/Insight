@@ -50,7 +50,7 @@ export default function FAQSection() {
   return (
     <section
       id="faq"
-      className="relative overflow-hidden bg-[#050816] py-28 text-white"
+      className="relative overflow-hidden bg-[#050816] py-16 text-white"
     >
       {/* Background Glow */}
       <div className="absolute inset-0 -z-10">
@@ -67,7 +67,7 @@ export default function FAQSection() {
           viewport={{ once: true, amount: 0.4 }}
           className="mb-16 text-center"
         >
-          <span className="mb-4 inline-flex rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-1 text-sm font-medium text-cyan-300 backdrop-blur-xl">
+          <span className="mb-4 inline-flex rounded-full border border-cyan-400/20 bg-cyan-400/10 px-6 py-2 text-lg font-medium text-cyan-300 backdrop-blur-xl">
             Frequently Asked Questions
           </span>
 

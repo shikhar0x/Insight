@@ -55,7 +55,7 @@ export default function Pricing() {
   return (
     <section
       id="pricing"
-      className="relative overflow-hidden bg-[#050816] py-24 text-white"
+      className="relative overflow-hidden bg-[#050816] py-16 text-white"
     >
       {/* Background Glow — same cyan/blue pairing as Features/HowItWorks/FAQ */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
@@ -72,8 +72,8 @@ export default function Pricing() {
           transition={{ duration: 0.8, ease: EASE }}
           className="mx-auto max-w-3xl text-center"
         >
-          <span className="inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-500/10 px-4 py-1 text-sm font-medium text-cyan-300 backdrop-blur-xl">
-            <Sparkles className="h-4 w-4" />
+          <span className="inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-500/10 px-6 py-2 text-lg font-medium text-cyan-300 backdrop-blur-xl">
+            <Sparkles className="h-5 w-5" />
             Pricing
           </span>
 

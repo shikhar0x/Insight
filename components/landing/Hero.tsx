@@ -19,8 +19,8 @@ const HOVER_SPRING = { type: "spring", stiffness: 260, damping: 24, mass: 0.9 } 
 export default function Hero() {
   return (
     <section
-        id = "home"
-        className="relative overflow-hidden px-6 py-32"
+        id="home"
+        className="relative overflow-hidden px-6 py-16"
     >
 
 

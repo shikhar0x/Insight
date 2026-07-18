@@ -66,7 +66,7 @@ export default function HowItWorks() {
   return (
     <section
       id="how-it-works"
-      className="relative overflow-hidden px-6 py-32"
+      className="relative overflow-hidden px-6 py-16"
     >
       <div className="absolute left-1/2 top-24 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500/10 blur-[120px]" />
       <div className="mx-auto max-w-7xl">
@@ -77,7 +77,7 @@ export default function HowItWorks() {
           transition={{ duration: 0.8, ease: EASE }}
           className="mx-auto mb-20 max-w-3xl text-center"
         >
-          <span className="rounded-full border border-cyan-400/20 bg-cyan-500/10 px-5 py-2 text-sm text-cyan-300">
+          <span className="inline-flex rounded-full border border-cyan-400/20 bg-cyan-500/10 px-6 py-2 text-lg font-medium text-cyan-300">
             How It Works
           </span>
           <h2 className="mt-6 text-5xl font-bold text-white">
