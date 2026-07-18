@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const navItems = [
   { label: "Home", href: "#home", id: "home", icon: Home },
   { label: "Features", href: "#features", id: "features" },
-  { label: "Dashboard", href: "#dashboard", id: "dashboard" },
+  { label: "Pricing", href: "#pricing", id: "pricing" },
   { label: "How It Works", href: "#how-it-works", id: "how-it-works" },
   { label: "FAQ", href: "#faq", id: "faq" },
 ];
@@ -86,14 +86,19 @@ export default function Navbar() {
   const handleNavClick = (e: MouseEvent, href: string, id: string) => {
     e.preventDefault();
     setMobileOpen(false);
-    setVisible(false);
     setActiveSection(id);
 
     if (id === "home") {
+      // Already home: just scroll to top, keep the bar visible — there's
+      // no new section to reveal, so nothing should disappear.
+      if (activeSection !== "home") {
+        setVisible(false);
+      }
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
 
+    setVisible(false);
     const targetId = href.replace("#", "");
     const target = document.getElementById(targetId);
     if (target) {
@@ -185,7 +190,7 @@ export default function Navbar() {
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden items-center gap-8 lg:flex">
+            <div className="hidden items-center gap-6 lg:flex">
               {navItems.map((item) => {
                 const isActive = activeSection === item.id;
                 const Icon = item.icon;
