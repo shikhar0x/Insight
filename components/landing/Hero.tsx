@@ -11,7 +11,10 @@ import {
 
 export default function Hero() {
   return (
-    <section id = "home" className="relative overflow-hidden px-6 py-32">
+    <section
+        id = "home"
+        className="relative overflow-hidden px-6 py-32"
+    >
 
 
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-20 px-6 pt-40 pb-12 lg:flex-row">
