@@ -96,7 +96,7 @@ npm install
 
 ### Important Dependencies
 
-The frontend relies on several key packages. If you encounter any missing module errors (for example, if you accidentally searched for "farmer" instead of **framer**), make sure the following are installed:
+The frontend relies on several key packages. If you encounter any missing module errors, make sure the following are installed:
 
 - `framer-motion` (Animations)
 - `@tanstack/react-query` (Data fetching)
