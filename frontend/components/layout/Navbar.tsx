@@ -8,8 +8,8 @@ import { motion, AnimatePresence } from "framer-motion";
 const navItems = [
   { label: "Home", href: "#home", id: "home", icon: Home },
   { label: "Features", href: "#features", id: "features" },
-  { label: "Pricing", href: "#pricing", id: "pricing" },
   { label: "How It Works", href: "#how-it-works", id: "how-it-works" },
+  { label: "Pricing", href: "#pricing", id: "pricing" },
   { label: "FAQ", href: "#faq", id: "faq" },
 ];
 
@@ -152,19 +152,13 @@ export default function Navbar() {
             shadow-[0_8px_40px_rgba(0,0,0,0.35)]
             transition-colors duration-300
             ${scrolled ? "border-white/20 bg-white/[0.10]" : ""}`}
-          style={{
-            // forces the browser to keep this layer's backdrop-filter
-            // pre-composited instead of computing it lazily on reveal
-            willChange: "backdrop-filter",
-            WebkitBackdropFilter: "blur(64px) saturate(150%)",
-          }}
         >
           {/* Liquid Glass shine layer — static, always fully rendered.
               No independent opacity/scale animation, so it can't lag
               behind the frame anymore. */}
           <div className="pointer-events-none absolute inset-0">
             <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/90 to-transparent" />
-            <div className="absolute left-1/2 -top-28 h-56 w-[28rem] -translate-x-1/2 rounded-full bg-cyan-400/10 blur-3xl" />
+            <div className="absolute left-1/2 -top-28 h-56 w-[28rem] -translate-x-1/2 bg-[radial-gradient(ellipse_at_center,rgba(34,211,238,0.15)_0%,transparent_70%)]" />
             <div className="absolute -left-24 top-0 h-full w-52 rotate-12 bg-gradient-to-r from-white/12 via-white/6 to-transparent blur-2xl" />
             <div className="absolute -right-24 top-0 h-full w-52 -rotate-12 bg-gradient-to-l from-white/10 via-white/5 to-transparent blur-2xl" />
             <div className="absolute inset-x-0 bottom-0 h-px bg-white/10" />
@@ -200,9 +194,8 @@ export default function Navbar() {
                     key={item.label}
                     href={item.href}
                     onClick={(e) => handleNavClick(e, item.href, item.id)}
-                    className={`relative flex items-center gap-1.5 pb-1 text-sm font-medium transition-colors duration-300 ${
-                      isActive ? "text-white" : "text-slate-300 hover:text-white"
-                    }`}
+                    className={`relative flex items-center gap-1.5 pb-1 text-sm font-medium transition-colors duration-300 ${isActive ? "text-white" : "text-slate-300 hover:text-white"
+                      }`}
                   >
                     {Icon && <Icon className="h-4 w-4" />}
                     <span>{item.label}</span>
@@ -267,9 +260,8 @@ export default function Navbar() {
                     key={item.label}
                     href={item.href}
                     onClick={(e) => handleNavClick(e, item.href, item.id)}
-                    className={`relative flex items-center gap-2 pl-3 transition-colors duration-300 ${
-                      isActive ? "text-white" : "text-slate-300 hover:text-white"
-                    }`}
+                    className={`relative flex items-center gap-2 pl-3 transition-colors duration-300 ${isActive ? "text-white" : "text-slate-300 hover:text-white"
+                      }`}
                   >
                     {isActive && (
                       <motion.span

@@ -8,7 +8,7 @@ const steps = [
     icon: Search,
     title: "Search Any Company",
     description:
-      "Search by company name, stock ticker or ISIN to begin your analysis.",
+      "Search by company name or stock ticker to begin your analysis.",
     points: ["Company Search", "Ticker Support", "Instant Lookup"],
   },
   {
@@ -108,9 +108,8 @@ export default function HowItWorks() {
                     delay: index * 0.08,
                     ease: EASE,
                   }}
-                  className={`grid items-center gap-10 lg:grid-cols-2 ${
-                    reverse ? "lg:[&>*:first-child]:order-2" : ""
-                  }`}
+                  className={`grid items-center gap-10 lg:grid-cols-2 ${reverse ? "lg:[&>*:first-child]:order-2" : ""
+                    }`}
                 >
                   <div className="hidden lg:flex justify-center">
                     <motion.div
@@ -128,9 +127,8 @@ export default function HowItWorks() {
                       scale: 1.01,
                       transition: HOVER_SPRING,
                     }}
-                    className={`group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.08] p-8 backdrop-blur-3xl backdrop-saturate-150 shadow-[0_8px_40px_rgba(0,0,0,0.35)] transition-colors duration-500 ease-out transform-gpu will-change-transform hover:border-cyan-400/40 ${
-                      step.featured ? "ring-1 ring-cyan-400/20" : ""
-                    }`}
+                    className={`group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.08] p-8 backdrop-blur-3xl backdrop-saturate-150 shadow-[0_8px_40px_rgba(0,0,0,0.35)] transition-colors duration-500 ease-out transform-gpu will-change-transform hover:border-cyan-400/40 ${step.featured ? "ring-1 ring-cyan-400/20" : ""
+                      }`}
                   >
                     {/* Hover Glow */}
                     <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100">

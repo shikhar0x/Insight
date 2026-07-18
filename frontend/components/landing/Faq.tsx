@@ -23,7 +23,7 @@ const faqs = [
   {
     question: "Which markets are supported?",
     answer:
-      "• Indian Equities\n• US Equities\n• Future Global Expansion",
+      "• Indian Equities\n• Future Global Expansion",
   },
   {
     question: "Is my data secure?",
@@ -102,11 +102,10 @@ export default function FAQSection() {
                   ease: EASE,
                   layout: { duration: 0.4, ease: EASE },
                 }}
-                className={`overflow-hidden rounded-3xl border backdrop-blur-3xl transition-colors duration-500 ease-out ${
-                  isOpen
+                className={`overflow-hidden rounded-3xl border backdrop-blur-3xl transition-colors duration-500 ease-out ${isOpen
                     ? "border-cyan-400/40 bg-cyan-500/10 shadow-[0_0_30px_rgba(34,211,238,0.08)]"
                     : "border-white/10 bg-white/5 hover:border-cyan-400/30"
-                }`}
+                  }`}
               >
                 <button
                   onClick={() =>
