@@ -1,36 +1,170 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Insight
 
-## Getting Started
+> **Explainable AI for Smarter Investing**
 
-First, run the development server:
+Insight is a modern AI-powered financial intelligence platform that helps investors understand **why** an investment may be good or bad—not just what the numbers are. It combines financial data, technical indicators, company fundamentals, risk analysis, and AI-generated explanations into a single intuitive platform.
+
+This repository contains the **Next.js frontend** for Insight.
+
+---
+
+## ✨ Features
+
+---
+
+# Tech Stack
+
+| Technology | Purpose |
+|------------|---------|
+| Next.js 16 | React Framework |
+| TypeScript | Type Safety |
+| Tailwind CSS | Styling |
+| Framer Motion | Animations |
+| Lucide React | Icons |
+
+---
+
+# Project Structure
+
+```text
+src/
+│
+├── app/
+├── components/
+│   ├── landing/
+│   ├── dashboard/
+│   ├── layout/
+│   └── ui/
+│
+├── hooks/
+├── lib/
+├── services/
+├── store/
+├── context/
+├── styles/
+└── types/
+```
+
+---
+
+# Current Progress
+
+### Landing Page
+
+- ✅ Animated Navbar
+- ✅ Hero Section
+- ✅ Features Section
+- 🚧 How It Works
+- 🚧 Pricing
+- 🚧 FAQ
+- 🚧 Footer
+
+### Dashboard
+
+- 🚧 Dashboard Layout
+- 🚧 Company Analysis
+- 🚧 Portfolio
+- 🚧 Watchlist
+- 🚧 Screener
+
+---
+
+# Getting Started
+
+## Clone the repository
+
+```bash
+git clone https://github.com/shikhar0x/Insight-frontend.git
+
+cd Insight-frontend
+```
+
+---
+
+## Install dependencies
+
+```bash
+npm install
+```
+
+---
+
+## Start the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+# Scripts
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run dev      # Development server
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+npm run build    # Production build
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+npm run start    # Start production server
 
-## Deploy on Vercel
+npm run lint     # ESLint
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Roadmap
+
+- Landing Page
+- Authentication
+- AI Chat Assistant
+- Stock Search
+- Explainable AI Dashboard
+- Company Analysis
+- Portfolio Tracking
+- Watchlist
+- Financial Statements
+- Technical Analysis
+- Risk Engine
+- News & Sentiment Analysis
+- Responsive Dashboard
+- Dark Theme Improvements
+
+---
+
+# Contributing
+
+Contributions are welcome.
+
+If you'd like to contribute:
+
+1. Fork the repository.
+2. Create a feature branch.
+3. Commit your changes.
+4. Open a Pull Request.
+
+---
+
+# License
+
+This project is currently under active development.
+
+A license will be added before the first stable release.
+
+---
+
+# Authors
+
+**Shikhar Upadhyay**
+
+GitHub: https://github.com/shikhar0x
+
+---
+
+## Status
+
+🚧 **Insight is currently under active development.**
