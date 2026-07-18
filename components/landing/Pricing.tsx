@@ -43,34 +43,49 @@ const plans = [
   },
 ];
 
+// Same curve used across Hero.tsx, Features.tsx, HowItWorks.tsx and
+// FAQSection.tsx — kept identical so the whole page decelerates the
+// same way.
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+// Same gentle, well-damped spring used for hover lifts/scales elsewhere.
+const HOVER_SPRING = { type: "spring", stiffness: 260, damping: 24, mass: 0.9 } as const;
+
 export default function Pricing() {
   return (
     <section
       id="pricing"
       className="relative overflow-hidden bg-[#050816] py-24 text-white"
     >
-      {/* Background Glow */}
-      <div className="absolute left-1/2 top-32 h-72 w-72 -translate-x-1/2 rounded-full bg-indigo-600/20 blur-[120px]" />
+      {/* Background Glow — same cyan/blue pairing as Features/HowItWorks/FAQ */}
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute left-1/2 top-32 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500/10 blur-[140px]" />
+        <div className="absolute bottom-0 right-0 h-72 w-72 rounded-full bg-blue-600/10 blur-[120px]" />
+      </div>
 
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         {/* Heading */}
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.8, ease: EASE }}
           className="mx-auto max-w-3xl text-center"
         >
-          <span className="inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-4 py-1 text-sm text-indigo-300 backdrop-blur">
+          <span className="inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-500/10 px-4 py-1 text-sm font-medium text-cyan-300 backdrop-blur-xl">
             <Sparkles className="h-4 w-4" />
             Pricing
           </span>
 
           <h2 className="mt-6 text-4xl font-bold md:text-5xl">
-            Simple, Transparent Pricing
+            Simple,{" "}
+            <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+              Transparent
+            </span>{" "}
+            Pricing
           </h2>
 
-          <p className="mt-5 text-lg text-gray-400">
+          <p className="mt-5 text-lg leading-8 text-slate-400">
             Start for free and upgrade whenever you're ready to unlock
             unlimited AI-powered investment insights.
           </p>
@@ -81,62 +96,80 @@ export default function Pricing() {
           {plans.map((plan, index) => (
             <motion.div
               key={plan.name}
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 0.3 }}
               transition={{
-                duration: 0.6,
-                delay: index * 0.15,
+                duration: 0.7,
+                delay: index * 0.12,
+                ease: EASE,
               }}
               whileHover={{
                 y: -8,
                 scale: 1.02,
+                transition: HOVER_SPRING,
               }}
-              className={`relative overflow-hidden rounded-3xl border backdrop-blur-xl transition-all duration-300
+              className={`group relative overflow-hidden rounded-[32px] border backdrop-blur-3xl backdrop-saturate-150 shadow-[0_8px_40px_rgba(0,0,0,0.35)] transition-colors duration-500 ease-out
               ${
                 plan.popular
-                  ? "border-indigo-500 bg-white/10 shadow-[0_0_50px_rgba(99,102,241,0.25)]"
-                  : "border-white/10 bg-white/5"
+                  ? "border-cyan-400/40 bg-white/[0.08] shadow-[0_0_50px_rgba(34,211,238,0.15)] ring-1 ring-cyan-400/20"
+                  : "border-white/10 bg-white/5 hover:border-cyan-400/30"
               }`}
             >
               {/* Glow */}
               {plan.popular && (
-                <div className="absolute -right-24 -top-24 h-56 w-56 rounded-full bg-indigo-500/20 blur-[100px]" />
+                <div className="absolute -right-24 -top-24 h-56 w-56 rounded-full bg-cyan-500/20 blur-[100px]" />
+              )}
+
+              {/* Hover Glow (non-popular card) */}
+              {!plan.popular && (
+                <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100">
+                  <div className="absolute -top-24 left-1/2 h-56 w-56 -translate-x-1/2 rounded-full bg-cyan-500/15 blur-[100px]" />
+                </div>
               )}
 
               {/* Popular Badge */}
               {plan.popular && (
-                <div className="absolute right-6 top-6 rounded-full bg-indigo-500 px-4 py-1 text-xs font-semibold">
+                <motion.div
+                  whileHover={{ scale: 1.06, transition: HOVER_SPRING }}
+                  className="absolute right-6 top-6 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 px-4 py-1 text-xs font-semibold shadow-lg shadow-cyan-500/30"
+                >
                   ⭐ Most Popular
-                </div>
+                </motion.div>
               )}
 
               <div className="relative p-8">
                 <h3 className="text-2xl font-bold">{plan.name}</h3>
 
                 <div className="mt-5 flex items-end gap-1">
-                  <span className="text-5xl font-extrabold">
+                  <span
+                    className={`text-5xl font-extrabold ${
+                      plan.popular
+                        ? "bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent"
+                        : ""
+                    }`}
+                  >
                     {plan.price}
                   </span>
-                  <span className="mb-1 text-gray-400">
+                  <span className="mb-1 text-slate-400">
                     {plan.period}
                   </span>
                 </div>
 
-                <p className="mt-4 text-gray-400">
+                <p className="mt-4 text-slate-400">
                   {plan.description}
                 </p>
 
                 <button
-                  className={`group mt-8 flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3 font-semibold transition-all duration-300
+                  className={`group/btn mt-8 flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3 font-semibold transition-colors duration-300 ease-out
                   ${
                     plan.popular
-                      ? "bg-indigo-600 hover:bg-indigo-500"
+                      ? "bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/30"
                       : "border border-white/10 bg-white/10 hover:bg-white/20"
                   }`}
                 >
                   {plan.button}
-                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
                 </button>
 
                 <div className="my-8 h-px bg-white/10" />
@@ -145,9 +178,9 @@ export default function Pricing() {
                   {plan.features.map((feature) => (
                     <li
                       key={feature}
-                      className="flex items-center gap-3 text-gray-300"
+                      className="flex items-center gap-3 text-slate-300"
                     >
-                      <Check className="h-5 w-5 text-emerald-400" />
+                      <Check className="h-5 w-5 text-cyan-400" />
                       {feature}
                     </li>
                   ))}
@@ -159,28 +192,28 @@ export default function Pricing() {
 
         {/* Bottom Trust Section */}
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="mt-16 flex flex-col items-center justify-center gap-6 text-gray-400 md:flex-row"
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.7, delay: 0.2, ease: EASE }}
+          className="mt-16 flex flex-col items-center justify-center gap-6 text-slate-400 md:flex-row"
         >
           <div className="flex items-center gap-2">
-            <ShieldCheck className="h-5 w-5 text-emerald-400" />
+            <ShieldCheck className="h-5 w-5 text-cyan-300" />
             No hidden fees
           </div>
 
           <div className="hidden h-5 w-px bg-white/10 md:block" />
 
           <div className="flex items-center gap-2">
-            <ShieldCheck className="h-5 w-5 text-emerald-400" />
+            <ShieldCheck className="h-5 w-5 text-cyan-300" />
             Cancel anytime
           </div>
 
           <div className="hidden h-5 w-px bg-white/10 md:block" />
 
           <div className="flex items-center gap-2">
-            <ShieldCheck className="h-5 w-5 text-emerald-400" />
+            <ShieldCheck className="h-5 w-5 text-cyan-300" />
             Secure payments
           </div>
         </motion.div>
