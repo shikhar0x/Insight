@@ -16,9 +16,6 @@ export default function Home() {
   const [currentView, setCurrentView] = useState<"landing" | "dashboard">(
     "landing"
   );
-  const [activeDashboardTab, setActiveDashboardTab] = useState<
-    "dashboard" | "portfolio" | "watchlist" | "screener" | "company"
-  >("dashboard");
   const [authMode, setAuthMode] = useState<"none" | "login" | "register">(
     "none"
   );
@@ -88,23 +85,25 @@ export default function Home() {
         onSuccess={handleLoginSuccess}
       />
 
-      <Navbar
-        isAuthenticated={isAuthenticated}
-        currentView={currentView}
-        activeDashboardTab={activeDashboardTab}
-        onDashboardTabChange={setActiveDashboardTab}
-        onLogin={() => setAuthMode("login")}
-        onRegister={() => setAuthMode("register")}
-        onDashboard={() => setCurrentView("dashboard")}
-        onLogout={() => {
-          setIsAuthenticated(false);
-          setCurrentView("landing");
-          setHasVisitedDashboard(false);
-        }}
-      />
+
 
       {currentView === "landing" ? (
         <>
+          <Navbar
+            isAuthenticated={isAuthenticated}
+            currentView="landing"
+            activeDashboardTab="dashboard"
+            onDashboardTabChange={() => {}}
+            onLogin={() => setAuthMode("login")}
+            onRegister={() => setAuthMode("register")}
+            onDashboard={() => setCurrentView("dashboard")}
+            onLogout={() => {
+              setIsAuthenticated(false);
+              setCurrentView("landing");
+              setHasVisitedDashboard(false);
+            }}
+          />
+
           <Hero
             onRegister={() => setAuthMode("register")}
             onDashboard={() => setCurrentView("dashboard")}
@@ -132,7 +131,14 @@ export default function Home() {
         </>
       ) : (
         <DashboardLayout
-          activeView={activeDashboardTab}
+          isAuthenticated={isAuthenticated}
+          onLogin={() => setAuthMode("login")}
+          onRegister={() => setAuthMode("register")}
+          onLogout={() => {
+            setIsAuthenticated(false);
+            setCurrentView("landing");
+            setHasVisitedDashboard(false);
+          }}
           onLanding={() => setCurrentView("landing")}
         />
       )}

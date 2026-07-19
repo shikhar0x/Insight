@@ -18,12 +18,13 @@ import {
 
 interface Props {
   onLanding: () => void;
+  onNavigateToTab?: (tab: string) => void;
 }
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 const HOVER_SPRING = { type: "spring", stiffness: 260, damping: 24, mass: 0.9 } as const;
 
-export default function DashboardHome({ onLanding }: Props) {
+export default function DashboardHome({ onLanding, onNavigateToTab }: Props) {
   return (
     <div className="relative min-h-screen px-6 pt-24 pb-20 text-white">
       {/* Background Glows */}
@@ -283,6 +284,7 @@ export default function DashboardHome({ onLanding }: Props) {
             </div>
 
             <motion.button
+              onClick={() => onNavigateToTab?.("screener")}
               whileHover={{ scale: 1.02, transition: HOVER_SPRING }}
               whileTap={{ scale: 0.98 }}
               className="relative mt-6 flex w-full items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 py-3 text-sm font-semibold text-cyan-300 hover:bg-cyan-500/10 hover:border-cyan-400/30 transition"
