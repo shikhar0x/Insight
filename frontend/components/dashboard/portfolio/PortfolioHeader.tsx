@@ -1,9 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Briefcase, ChevronLeft, ChevronRight } from "lucide-react";
-
-const HOVER_SPRING = { type: "spring", stiffness: 260, damping: 24, mass: 0.9 } as const;
+import { Briefcase } from "lucide-react";
 
 interface PortfolioHeaderProps {
   onBack?: () => void;
@@ -12,36 +10,10 @@ interface PortfolioHeaderProps {
 export default function PortfolioHeader({ onBack }: PortfolioHeaderProps) {
   return (
     <div>
-      {/* Top Row: Pill Badge + Navigation */}
-      <div className="flex items-center justify-between">
-        <div className="inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-500/10 px-4 py-1.5 text-sm font-medium text-cyan-300 backdrop-blur-xl">
-          <Briefcase className="h-4 w-4" />
-          Portfolio Workspace
-        </div>
-
-        <div className="flex items-center gap-2">
-          <motion.button
-            onClick={onBack}
-            whileHover={{ scale: 1.05, transition: HOVER_SPRING }}
-            whileTap={{ scale: 0.95 }}
-            title="Back"
-            aria-label="Back to Dashboard"
-            className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-300 backdrop-blur-xl transition hover:border-cyan-400/30 hover:bg-white/10 hover:text-white"
-          >
-            <ChevronLeft className="h-5 w-5" strokeWidth={2.5} />
-          </motion.button>
-
-          <motion.button
-            whileHover={{ scale: 1.05, transition: HOVER_SPRING }}
-            whileTap={{ scale: 0.95 }}
-            title="Forward"
-            aria-label="Forward"
-            disabled
-            className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/5 bg-white/[0.02] text-slate-600 backdrop-blur-xl cursor-not-allowed opacity-50"
-          >
-            <ChevronRight className="h-5 w-5" strokeWidth={2.5} />
-          </motion.button>
-        </div>
+      {/* Top Row: Pill Badge only - removed arrows */}
+      <div className="inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-500/10 px-4 py-1.5 text-sm font-medium text-cyan-300 backdrop-blur-xl">
+        <Briefcase className="h-4 w-4" />
+        Portfolio Workspace
       </div>
 
       <h1 className="mt-3 text-4xl font-extrabold tracking-tight md:text-5xl text-white">

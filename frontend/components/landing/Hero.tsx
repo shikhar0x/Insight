@@ -7,15 +7,9 @@ import {
   ShieldCheck,
   TrendingUp,
   Sparkles,
-  ChevronLeft,
-  ChevronRight,
 } from "lucide-react";
 
-// Same curve used across Features.tsx, HowItWorks.tsx and FAQSection.tsx —
-// kept identical so the whole page decelerates the same way.
 const EASE = [0.16, 1, 0.3, 1] as const;
-
-// Same gentle, well-damped spring used for hover lifts/scales elsewhere.
 const HOVER_SPRING = { type: "spring", stiffness: 260, damping: 24, mass: 0.9 } as const;
 
 interface HeroProps {
@@ -37,8 +31,8 @@ export default function Hero({
       className="relative overflow-hidden px-6 pt-24 pb-16"
     >
       <div className="mx-auto max-w-7xl px-8">
-        {/* Top Header Row: Pill Badge on Left + Navigation Arrows on Right */}
-        <div className="mb-8 flex items-center justify-between">
+        {/* Top Header Row: Pill Badge only - removed arrows */}
+        <div className="mb-8">
           <motion.div
             whileHover={{ scale: 1.03, transition: HOVER_SPRING }}
             className="inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-sm text-cyan-300 backdrop-blur-xl"
@@ -46,46 +40,6 @@ export default function Hero({
             <Sparkles size={16} />
             Explainable AI for Smarter Investing
           </motion.div>
-
-          {/* Navigation Arrows */}
-          <div className="flex items-center gap-2">
-            <motion.button
-              disabled
-              whileHover={{ scale: 1.05, transition: HOVER_SPRING }}
-              whileTap={{ scale: 0.95 }}
-              title="Back"
-              aria-label="Back"
-              className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/5 bg-white/[0.02] text-slate-600 backdrop-blur-xl cursor-not-allowed opacity-50"
-            >
-              <ChevronLeft
-                className="h-5 w-5"
-                strokeWidth={2.5}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </motion.button>
-
-            <motion.button
-              onClick={onDashboard}
-              whileHover={{ scale: 1.05, transition: HOVER_SPRING }}
-              whileTap={{ scale: 0.95 }}
-              title={canGoForward ? "Go to Dashboard" : "Forward"}
-              aria-label="Forward"
-              disabled={!canGoForward}
-              className={`flex h-10 w-10 items-center justify-center rounded-xl border backdrop-blur-xl transition ${
-                canGoForward
-                  ? "border-white/10 bg-white/5 text-slate-300 hover:border-cyan-400/30 hover:bg-white/10 hover:text-white"
-                  : "border-white/5 bg-white/[0.02] text-slate-600 cursor-not-allowed opacity-50"
-              }`}
-            >
-              <ChevronRight
-                className="h-5 w-5"
-                strokeWidth={2.5}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </motion.button>
-          </div>
         </div>
 
         {/* Hero Body Layout */}

@@ -1,11 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Search, ChevronLeft, ChevronRight } from "lucide-react";
+import { Search } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { companyDataMap } from "@/lib/companyData";
-
-const HOVER_SPRING = { type: "spring", stiffness: 260, damping: 24, mass: 0.9 } as const;
 
 interface CompanySearchProps {
   onSearch: (symbol: string) => void;
@@ -23,9 +21,8 @@ export default function CompanySearch({ onSearch, onBack }: CompanySearchProps) 
   );
 
   return (
-    <div className="relative z-30 flex flex-col md:flex-row md:items-center justify-between gap-4">
-      {/* Search Input Container */}
-      <div className="relative flex-1 max-w-xl">
+    <div className="relative z-30">
+      <div className="relative max-w-xl">
         <div className="relative">
           <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
           <input
@@ -73,29 +70,6 @@ export default function CompanySearch({ onSearch, onBack }: CompanySearchProps) 
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
-
-      {/* Navigation Arrows */}
-      <div className="flex items-center gap-2">
-        <motion.button
-          onClick={onBack}
-          whileHover={{ scale: 1.05, transition: HOVER_SPRING }}
-          whileTap={{ scale: 0.95 }}
-          title="Back"
-          aria-label="Back to Dashboard"
-          className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-300 backdrop-blur-xl transition hover:border-cyan-400/30 hover:bg-white/10 hover:text-white"
-        >
-          <ChevronLeft className="h-5 w-5" strokeWidth={2.5} />
-        </motion.button>
-
-        <motion.button
-          whileHover={{ scale: 1.05, transition: HOVER_SPRING }}
-          whileTap={{ scale: 0.95 }}
-          disabled
-          className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/5 bg-white/[0.02] text-slate-600 backdrop-blur-xl cursor-not-allowed opacity-50"
-        >
-          <ChevronRight className="h-5 w-5" strokeWidth={2.5} />
-        </motion.button>
       </div>
     </div>
   );
