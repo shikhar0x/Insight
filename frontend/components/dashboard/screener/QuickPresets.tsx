@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Pencil, Trash2 } from "lucide-react";
 import type { Preset } from "./types";
 
@@ -119,7 +119,7 @@ export default function QuickPresets({
         </div>
       </div>
 
-      {/* Custom Screens - fixed size with overlapping content */}
+      {/* Custom Screens - using div instead of button to avoid nested buttons */}
       {customPresets.length > 0 && (
         <div className="space-y-3 pt-2">
           <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
@@ -137,16 +137,15 @@ export default function QuickPresets({
                   onMouseEnter={() => isSelected && setHoveredCustom(name)}
                   onMouseLeave={() => isSelected && setHoveredCustom(null)}
                 >
-                  <motion.button
+                  <motion.div
                     onClick={() => onSelectPreset(name)}
                     whileHover={{ scale: 1.05, transition: HOVER_SPRING }}
                     whileTap={{ scale: 0.95 }}
-                    className={`relative rounded-xl px-4 py-2 text-xs font-bold border transition-colors duration-300 ${isSelected
+                    className={`relative rounded-xl px-4 py-2 text-xs font-bold border transition-colors duration-300 cursor-pointer ${isSelected
                         ? "border-cyan-400/40 bg-cyan-500/20 text-cyan-300 shadow-md shadow-cyan-500/10"
                         : "border-white/10 bg-white/5 text-slate-400 hover:border-white/20 hover:text-slate-200"
                       }`}
                   >
-                    {/* Text - always present to maintain width */}
                     <span
                       className={`transition-opacity duration-200 ${showIcons ? "opacity-0" : "opacity-100"
                         }`}
@@ -154,7 +153,6 @@ export default function QuickPresets({
                       {name}
                     </span>
 
-                    {/* Icons - absolutely positioned on top, same size container */}
                     <span
                       className={`absolute inset-0 flex items-center justify-center gap-2 transition-opacity duration-200 ${showIcons ? "opacity-100" : "opacity-0"
                         }`}
@@ -180,7 +178,7 @@ export default function QuickPresets({
                         <Trash2 className="h-3.5 w-3.5" />
                       </button>
                     </span>
-                  </motion.button>
+                  </motion.div>
                 </div>
               );
             })}
