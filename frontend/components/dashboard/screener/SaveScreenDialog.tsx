@@ -1,17 +1,28 @@
 "use client";
 
-import { useState } from "react";
-import { X, Bookmark } from "lucide-react";
+import { useState, useEffect } from "react";
+import { X, Bookmark, Pencil } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface SaveScreenDialogProps {
   isOpen: boolean;
   onClose: () => void;
   onSave: (name: string) => void;
+  editingName?: string | null; // if provided, we are editing an existing preset
 }
 
-export default function SaveScreenDialog({ isOpen, onClose, onSave }: SaveScreenDialogProps) {
+export default function SaveScreenDialog({ isOpen, onClose, onSave, editingName }: SaveScreenDialogProps) {
   const [screenName, setScreenName] = useState("");
+  const isEditing = !!editingName;
+
+  // When editingName changes, prefill the input
+  useEffect(() => {
+    if (isOpen && editingName) {
+      setScreenName(editingName);
+    } else if (isOpen && !editingName) {
+      setScreenName("");
+    }
+  }, [isOpen, editingName]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,8 +59,17 @@ export default function SaveScreenDialog({ isOpen, onClose, onSave }: SaveScreen
             {/* Header */}
             <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-4">
               <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                <Bookmark className="h-5 w-5 text-cyan-400" />
-                Save Current Screen
+                {isEditing ? (
+                  <>
+                    <Pencil className="h-5 w-5 text-cyan-400" />
+                    Update Preset
+                  </>
+                ) : (
+                  <>
+                    <Bookmark className="h-5 w-5 text-cyan-400" />
+                    Save Current Screen
+                  </>
+                )}
               </h3>
               <button
                 onClick={onClose}
@@ -63,7 +83,7 @@ export default function SaveScreenDialog({ isOpen, onClose, onSave }: SaveScreen
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
-                  Screen Name
+                  Preset Name
                 </label>
                 <input
                   type="text"
@@ -73,6 +93,9 @@ export default function SaveScreenDialog({ isOpen, onClose, onSave }: SaveScreen
                   placeholder="e.g. High Growth Stocks"
                   className="w-full rounded-xl border border-white/10 bg-black/40 px-3 py-2.5 text-sm text-white outline-none focus:border-cyan-400/50"
                 />
+                {isEditing && (
+                  <p className="mt-1 text-xs text-slate-500">Edit the name if you wish, or keep it the same.</p>
+                )}
               </div>
 
               <div className="flex justify-end gap-3 pt-2">
@@ -87,7 +110,7 @@ export default function SaveScreenDialog({ isOpen, onClose, onSave }: SaveScreen
                   type="submit"
                   className="rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-md shadow-cyan-500/10"
                 >
-                  Save Preset
+                  {isEditing ? "Update Preset" : "Save Preset"}
                 </button>
               </div>
             </form>
