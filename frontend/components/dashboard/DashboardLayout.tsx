@@ -14,7 +14,7 @@ interface DashboardLayoutProps {
   onLogin: () => void;
   onRegister: () => void;
   onLogout: () => void;
-  onLanding: () => void;
+  onLanding: () => void; // ✅ REQUIRED
 }
 
 export default function DashboardLayout({
@@ -84,6 +84,7 @@ export default function DashboardLayout({
         onRegister={onRegister}
         onDashboard={() => setActiveView("dashboard")}
         onLogout={onLogout}
+        onLanding={onLanding} // ✅ PASS IT HERE
       />
       <div className="overflow-hidden">
         <AnimatePresence mode="wait">

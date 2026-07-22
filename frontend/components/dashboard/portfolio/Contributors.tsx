@@ -84,7 +84,7 @@ export default function Contributors({
     totalValue,
 }: ContributorsProps) {
     return (
-        <div className="mt-8 grid gap-8 md:grid-cols-2">
+        <div className="mt-8 grid gap-16 md:grid-cols-2">
             {/* Top Contributors */}
             <motion.div
                 initial={{ opacity: 0, y: 30 }}

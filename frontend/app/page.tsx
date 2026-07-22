@@ -54,7 +54,7 @@ export default function Home() {
       setHasVisitedDashboard(true);
     }
   }, [currentView, isMounted]);
-  
+
   useEffect(() => {
     if (!isMounted) return;
     localStorage.setItem("insight_hasVisitedDashboard", hasVisitedDashboard.toString());
@@ -85,15 +85,13 @@ export default function Home() {
         onSuccess={handleLoginSuccess}
       />
 
-
-
       {currentView === "landing" ? (
         <>
           <Navbar
             isAuthenticated={isAuthenticated}
             currentView="landing"
             activeDashboardTab="dashboard"
-            onDashboardTabChange={() => {}}
+            onDashboardTabChange={() => { }}
             onLogin={() => setAuthMode("login")}
             onRegister={() => setAuthMode("register")}
             onDashboard={() => setCurrentView("dashboard")}
@@ -102,6 +100,7 @@ export default function Home() {
               setCurrentView("landing");
               setHasVisitedDashboard(false);
             }}
+            onLanding={() => setCurrentView("landing")}
           />
 
           <Hero
@@ -139,7 +138,7 @@ export default function Home() {
             setCurrentView("landing");
             setHasVisitedDashboard(false);
           }}
-          onLanding={() => setCurrentView("landing")}
+          onLanding={() => setCurrentView("landing")} // ✅ PASS HERE
         />
       )}
     </main>

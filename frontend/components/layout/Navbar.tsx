@@ -59,6 +59,7 @@ interface NavbarProps {
 
   onDashboard: () => void;
   onLogout: () => void;
+  onLanding: () => void; // Required for home button navigation
   lockVisible?: boolean;
 }
 
@@ -71,6 +72,7 @@ export default function Navbar({
   onRegister,
   onDashboard,
   onLogout,
+  onLanding,
   lockVisible = false,
 }: NavbarProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -83,7 +85,12 @@ export default function Navbar({
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const [isSubscriptionModalOpen, setIsSubscriptionModalOpen] = useState(false);
 
-  const navItems = currentView === "landing" ? landingNavItems : dashboardNavItems;
+  // Build nav items: when in dashboard, prepend a "Home" item that leads to landing
+  const dashboardNavItemsWithHome: DashboardNavItem[] = [
+    { label: "Home", id: "home" },
+    ...dashboardNavItems,
+  ];
+  const navItems = currentView === "landing" ? landingNavItems : dashboardNavItemsWithHome;
 
   const hideTimeout = useRef<NodeJS.Timeout | null>(null);
   const profileRef = useRef<HTMLDivElement>(null);
@@ -132,7 +139,7 @@ export default function Navbar({
     }
   }, [lockVisible, isAuthenticated, currentView]);
 
-  // Scroll-spy
+  // Scroll-spy (only for landing view)
   useEffect(() => {
     if (currentView !== "landing") return;
 
@@ -205,6 +212,29 @@ export default function Navbar({
     setVisible(true);
   };
 
+  // Handle home button click from dashboard view
+  const handleHomeClick = () => {
+    setMobileOpen(false);
+    setProfileOpen(false);
+    // Reset active section to home so the underline shows on Home
+    setActiveSection("home");
+    // Navigate to landing page
+    onLanding();
+    // Scroll to top of the page
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // Determine if an item is active
+  const isItemActive = (item: LandingNavItem | DashboardNavItem) => {
+    if (currentView === "landing") {
+      return activeSection === item.id;
+    } else {
+      // For dashboard view, "home" is never active; others compare to activeDashboardTab
+      if (item.id === "home") return false;
+      return activeDashboardTab === item.id;
+    }
+  };
+
   return (
     <>
       {/* Invisible Hover Zone */}
@@ -269,10 +299,21 @@ export default function Navbar({
             {/* Desktop Navigation */}
             <div className="hidden items-center gap-6 lg:flex">
               {navItems.map((item) => {
-                const isActive =
-                  currentView === "landing"
-                    ? activeSection === item.id
-                    : activeDashboardTab === item.id;
+                const isActive = isItemActive(item);
+
+                // Handle "Home" in dashboard view specially
+                if (currentView === "dashboard" && item.id === "home") {
+                  return (
+                    <button
+                      key="home"
+                      onClick={handleHomeClick}
+                      className="relative flex items-center gap-1.5 pb-1 text-sm font-medium text-slate-300 transition-colors duration-300 hover:text-white"
+                    >
+                      <Home className="h-4 w-4" />
+                      <span>Home</span>
+                    </button>
+                  );
+                }
 
                 if (currentView === "landing") {
                   const landingItem = item as LandingNavItem;
@@ -417,7 +458,6 @@ export default function Navbar({
                             shadow-2xl
                           "
                         >
-                          {/* Profile - opens main modal */}
                           <button
                             onClick={() => {
                               setProfileOpen(false);
@@ -518,10 +558,20 @@ export default function Navbar({
           >
             <div className="flex flex-col gap-5">
               {navItems.map((item) => {
-                const isActive =
-                  currentView === "landing"
-                    ? activeSection === item.id
-                    : activeDashboardTab === item.id;
+                const isActive = isItemActive(item);
+
+                if (currentView === "dashboard" && item.id === "home") {
+                  return (
+                    <button
+                      key="home"
+                      onClick={handleHomeClick}
+                      className="relative flex items-center gap-2 pl-3 text-slate-300 hover:text-white transition-colors duration-300"
+                    >
+                      <Home className="h-4 w-4" />
+                      Home
+                    </button>
+                  );
+                }
 
                 if (currentView === "landing") {
                   const landingItem = item as LandingNavItem;
