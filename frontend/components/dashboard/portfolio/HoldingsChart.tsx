@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
+import { PieChart as LucidePieChart } from "lucide-react";
 import type { Holding } from "@/lib/portfolioData";
 
 const COLORS = ["#22D3EE", "#60A5FA", "#34D399", "#FBBF24", "#F472B6", "#A78BFA", "#F87171", "#34D399"];
@@ -26,6 +27,7 @@ export default function HoldingsChart({ holdings, totalValue }: HoldingsChartPro
             className="
         group
         relative
+        mt-16
         overflow-hidden
         rounded-[32px]
         border
@@ -46,7 +48,10 @@ export default function HoldingsChart({ holdings, totalValue }: HoldingsChartPro
 
             <div className="relative">
                 <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-4">
-                    <h4 className="text-sm font-bold text-white">Holdings by weight</h4>
+                    <div className="flex items-center gap-2">
+                        <LucidePieChart className="h-5 w-5 text-cyan-400" />
+                        <h4 className="text-sm font-bold text-white">Holdings by weight</h4>
+                    </div>
                     <span className="text-xs text-slate-500">{holdings.length} stocks</span>
                 </div>
 
@@ -74,7 +79,10 @@ export default function HoldingsChart({ holdings, totalValue }: HoldingsChartPro
                                     borderRadius: "12px",
                                     color: "white",
                                 }}
-                                formatter={(value: number) => `${value.toFixed(1)}%`}
+                                formatter={(value) => {
+                                    if (typeof value === 'number') return `${value.toFixed(1)}%`;
+                                    return `${value || 0}%`;
+                                }}
                                 labelFormatter={(label) => `${label}`}
                             />
                         </PieChart>
