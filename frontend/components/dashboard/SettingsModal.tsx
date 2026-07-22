@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Lock, Bell, Moon } from "lucide-react";
+import { X, Lock, Bell, Moon, Eye, EyeOff } from "lucide-react";
 
 interface SettingsModalProps {
     isOpen: boolean;
@@ -84,6 +84,11 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
+    // Password visibility states
+    const [showOldPassword, setShowOldPassword] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
     const handlePasswordChange = (e: React.FormEvent) => {
         e.preventDefault();
         if (newPassword !== confirmPassword) {
@@ -148,30 +153,63 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                                     Change Password
                                 </h4>
                                 <form onSubmit={handlePasswordChange} className="space-y-3">
-                                    <input
-                                        type="password"
-                                        value={oldPassword}
-                                        onChange={(e) => setOldPassword(e.target.value)}
-                                        placeholder="Current password"
-                                        required
-                                        className="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-2.5 text-sm text-white outline-none focus:border-cyan-400/50"
-                                    />
-                                    <input
-                                        type="password"
-                                        value={newPassword}
-                                        onChange={(e) => setNewPassword(e.target.value)}
-                                        placeholder="New password"
-                                        required
-                                        className="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-2.5 text-sm text-white outline-none focus:border-cyan-400/50"
-                                    />
-                                    <input
-                                        type="password"
-                                        value={confirmPassword}
-                                        onChange={(e) => setConfirmPassword(e.target.value)}
-                                        placeholder="Confirm new password"
-                                        required
-                                        className="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-2.5 text-sm text-white outline-none focus:border-cyan-400/50"
-                                    />
+                                    {/* Current Password */}
+                                    <div className="relative">
+                                        <input
+                                            type={showOldPassword ? "text" : "password"}
+                                            value={oldPassword}
+                                            onChange={(e) => setOldPassword(e.target.value)}
+                                            placeholder="Current password"
+                                            required
+                                            className="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-2.5 pr-10 text-sm text-white outline-none focus:border-cyan-400/50"
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowOldPassword(!showOldPassword)}
+                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition"
+                                        >
+                                            {showOldPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                        </button>
+                                    </div>
+
+                                    {/* New Password */}
+                                    <div className="relative">
+                                        <input
+                                            type={showNewPassword ? "text" : "password"}
+                                            value={newPassword}
+                                            onChange={(e) => setNewPassword(e.target.value)}
+                                            placeholder="New password"
+                                            required
+                                            className="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-2.5 pr-10 text-sm text-white outline-none focus:border-cyan-400/50"
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowNewPassword(!showNewPassword)}
+                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition"
+                                        >
+                                            {showNewPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                        </button>
+                                    </div>
+
+                                    {/* Confirm New Password */}
+                                    <div className="relative">
+                                        <input
+                                            type={showConfirmPassword ? "text" : "password"}
+                                            value={confirmPassword}
+                                            onChange={(e) => setConfirmPassword(e.target.value)}
+                                            placeholder="Confirm new password"
+                                            required
+                                            className="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-2.5 pr-10 text-sm text-white outline-none focus:border-cyan-400/50"
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition"
+                                        >
+                                            {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                        </button>
+                                    </div>
+
                                     <button
                                         type="submit"
                                         className="rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-cyan-500/25 transition hover:scale-105"

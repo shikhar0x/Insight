@@ -30,6 +30,10 @@ export default function RegisterForm({
     }>({});
     const [isLoading, setIsLoading] = useState(false);
 
+    // Password visibility toggles
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
     // Password strength calculation
     const getPasswordStrength = (pass: string) => {
         if (!pass) return { score: 0, label: "", color: "" };
@@ -167,14 +171,17 @@ export default function RegisterForm({
             <div>
                 <AuthInput
                     label="Password"
+                    type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
-                    type="password"
                     value={password}
                     onChange={(e) => {
                         setPassword(e.target.value);
                         if (errors.password) setErrors((prev) => ({ ...prev, password: undefined }));
                     }}
                     error={errors.password}
+                    showToggle={true}
+                    showPassword={showPassword}
+                    onToggle={() => setShowPassword(!showPassword)}
                 />
 
                 {/* Password Strength Indicator */}
@@ -196,36 +203,39 @@ export default function RegisterForm({
 
             <AuthInput
                 label="Confirm Password"
+                type={showConfirmPassword ? "text" : "password"}
                 placeholder="••••••••"
-                type="password"
                 value={confirmPassword}
                 onChange={(e) => {
                     setConfirmPassword(e.target.value);
                     if (errors.confirmPassword) setErrors((prev) => ({ ...prev, confirmPassword: undefined }));
                 }}
                 error={errors.confirmPassword}
+                showToggle={true}
+                showPassword={showConfirmPassword}
+                onToggle={() => setShowConfirmPassword(!showConfirmPassword)}
             />
 
             <button
                 type="submit"
                 disabled={isLoading}
                 className="
-        mt-2
-        flex
-        w-full
-        items-center
-        justify-center
-        gap-2
-        rounded-xl
-        bg-cyan-500
-        py-3
-        font-semibold
-        text-black
-        transition
-        hover:bg-cyan-400
-        disabled:opacity-50
-        disabled:cursor-not-allowed
-        "
+                    mt-2
+                    flex
+                    w-full
+                    items-center
+                    justify-center
+                    gap-2
+                    rounded-xl
+                    bg-cyan-500
+                    py-3
+                    font-semibold
+                    text-black
+                    transition
+                    hover:bg-cyan-400
+                    disabled:opacity-50
+                    disabled:cursor-not-allowed
+                "
             >
                 {isLoading ? (
                     <>
