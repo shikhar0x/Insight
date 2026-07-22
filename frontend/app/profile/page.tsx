@@ -12,6 +12,8 @@ import {
     Check,
     X,
     LogOut,
+    Eye,
+    EyeOff,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -125,6 +127,11 @@ export default function ProfilePage() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [editingField, setEditingField] = useState<"name" | "email" | null>(null);
     const [tempValue, setTempValue] = useState("");
+
+    // Password visibility states
+    const [showOldPassword, setShowOldPassword] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const handleEdit = (field: "name" | "email") => {
         setEditingField(field);
@@ -264,36 +271,63 @@ export default function ProfilePage() {
                         <form onSubmit={handlePasswordChange} className="mt-6 space-y-4">
                             <div>
                                 <label className="block text-sm font-medium text-slate-400">Current Password</label>
-                                <input
-                                    type="password"
-                                    value={oldPassword}
-                                    onChange={(e) => setOldPassword(e.target.value)}
-                                    placeholder="••••••••"
-                                    required
-                                    className="mt-1 w-full rounded-xl border border-white/10 bg-black/40 px-4 py-2.5 text-white outline-none focus:border-cyan-400/50"
-                                />
+                                <div className="relative">
+                                    <input
+                                        type={showOldPassword ? "text" : "password"}
+                                        value={oldPassword}
+                                        onChange={(e) => setOldPassword(e.target.value)}
+                                        placeholder="••••••••"
+                                        required
+                                        className="mt-1 w-full rounded-xl border border-white/10 bg-black/40 px-4 py-2.5 pr-10 text-white outline-none focus:border-cyan-400/50"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowOldPassword(!showOldPassword)}
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition"
+                                    >
+                                        {showOldPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                    </button>
+                                </div>
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-slate-400">New Password</label>
-                                <input
-                                    type="password"
-                                    value={newPassword}
-                                    onChange={(e) => setNewPassword(e.target.value)}
-                                    placeholder="••••••••"
-                                    required
-                                    className="mt-1 w-full rounded-xl border border-white/10 bg-black/40 px-4 py-2.5 text-white outline-none focus:border-cyan-400/50"
-                                />
+                                <div className="relative">
+                                    <input
+                                        type={showNewPassword ? "text" : "password"}
+                                        value={newPassword}
+                                        onChange={(e) => setNewPassword(e.target.value)}
+                                        placeholder="••••••••"
+                                        required
+                                        className="mt-1 w-full rounded-xl border border-white/10 bg-black/40 px-4 py-2.5 pr-10 text-white outline-none focus:border-cyan-400/50"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowNewPassword(!showNewPassword)}
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition"
+                                    >
+                                        {showNewPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                    </button>
+                                </div>
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-slate-400">Confirm New Password</label>
-                                <input
-                                    type="password"
-                                    value={confirmPassword}
-                                    onChange={(e) => setConfirmPassword(e.target.value)}
-                                    placeholder="••••••••"
-                                    required
-                                    className="mt-1 w-full rounded-xl border border-white/10 bg-black/40 px-4 py-2.5 text-white outline-none focus:border-cyan-400/50"
-                                />
+                                <div className="relative">
+                                    <input
+                                        type={showConfirmPassword ? "text" : "password"}
+                                        value={confirmPassword}
+                                        onChange={(e) => setConfirmPassword(e.target.value)}
+                                        placeholder="••••••••"
+                                        required
+                                        className="mt-1 w-full rounded-xl border border-white/10 bg-black/40 px-4 py-2.5 pr-10 text-white outline-none focus:border-cyan-400/50"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition"
+                                    >
+                                        {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                    </button>
+                                </div>
                             </div>
                             <button
                                 type="submit"

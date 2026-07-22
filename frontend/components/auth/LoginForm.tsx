@@ -27,6 +27,9 @@ export default function LoginForm({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  // Password visibility toggle state
+  const [showPassword, setShowPassword] = useState(false);
+
   async function handleLogin() {
     setError("");
 
@@ -87,13 +90,16 @@ export default function LoginForm({
       <div>
         <AuthInput
           label="Password"
-          type="password"
+          type={showPassword ? "text" : "password"}
           placeholder="••••••••"
           value={password}
           onChange={(e) => {
             setPassword(e.target.value);
             setError("");
           }}
+          showToggle={true}
+          showPassword={showPassword}
+          onToggle={() => setShowPassword(!showPassword)}
         />
         <div className="mt-1.5 text-left">
           <button type="button" className="text-xs text-cyan-400 hover:underline">
