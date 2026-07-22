@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Pencil, Trash2 } from "lucide-react";
 import type { Preset } from "./types";
@@ -91,6 +92,8 @@ export default function QuickPresets({
   onDeletePreset,
   onEditPreset,
 }: QuickPresetsProps) {
+  const [hoveredCustom, setHoveredCustom] = useState<string | null>(null);
+
   return (
     <div className="space-y-4">
       {/* Quick Presets */}
@@ -105,11 +108,10 @@ export default function QuickPresets({
               onClick={() => onSelectPreset(preset.id)}
               whileHover={{ scale: 1.05, transition: HOVER_SPRING }}
               whileTap={{ scale: 0.95 }}
-              className={`rounded-xl px-4 py-2 text-xs font-bold border transition-all duration-300 ${
-                selectedPreset === preset.id
+              className={`rounded-xl px-4 py-2 text-xs font-bold border transition-all duration-300 ${selectedPreset === preset.id
                   ? "border-cyan-400/40 bg-cyan-500/20 text-cyan-300 shadow-md shadow-cyan-500/10"
                   : "border-white/10 bg-white/5 text-slate-400 hover:border-white/20 hover:text-slate-200"
-              }`}
+                }`}
             >
               {preset.name}
             </motion.button>
@@ -117,7 +119,7 @@ export default function QuickPresets({
         </div>
       </div>
 
-      {/* Saved Screens with hover actions */}
+      {/* Custom Screens - fixed size with overlapping content */}
       {customPresets.length > 0 && (
         <div className="space-y-3 pt-2">
           <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
@@ -126,49 +128,59 @@ export default function QuickPresets({
           <div className="flex flex-wrap gap-2.5">
             {customPresets.map((name) => {
               const isSelected = selectedPreset === name;
+              const isHovered = hoveredCustom === name;
+              const showIcons = isSelected && isHovered;
+
               return (
                 <div
                   key={name}
-                  className="relative group/custom"
+                  onMouseEnter={() => isSelected && setHoveredCustom(name)}
+                  onMouseLeave={() => isSelected && setHoveredCustom(null)}
                 >
                   <motion.button
                     onClick={() => onSelectPreset(name)}
                     whileHover={{ scale: 1.05, transition: HOVER_SPRING }}
                     whileTap={{ scale: 0.95 }}
-                    className={`rounded-xl px-4 py-2 text-xs font-bold border transition-all duration-300 ${
-                      isSelected
+                    className={`relative rounded-xl px-4 py-2 text-xs font-bold border transition-colors duration-300 ${isSelected
                         ? "border-cyan-400/40 bg-cyan-500/20 text-cyan-300 shadow-md shadow-cyan-500/10"
                         : "border-white/10 bg-white/5 text-slate-400 hover:border-white/20 hover:text-slate-200"
-                    }`}
+                      }`}
                   >
-                    {name}
-                  </motion.button>
+                    {/* Text - always present to maintain width */}
+                    <span
+                      className={`transition-opacity duration-200 ${showIcons ? "opacity-0" : "opacity-100"
+                        }`}
+                    >
+                      {name}
+                    </span>
 
-                  {/* Hover overlay: edit & delete buttons */}
-                  <div className="absolute -top-1 -right-1 flex gap-1 opacity-0 group-hover/custom:opacity-100 transition-opacity duration-200 pointer-events-none group-hover/custom:pointer-events-auto">
-                    {/* Edit */}
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onEditPreset?.(name);
-                      }}
-                      className="p-1 rounded-full bg-cyan-500/20 border border-cyan-400/30 text-cyan-300 hover:bg-cyan-500/30 transition-colors"
-                      title="Edit preset filters"
+                    {/* Icons - absolutely positioned on top, same size container */}
+                    <span
+                      className={`absolute inset-0 flex items-center justify-center gap-2 transition-opacity duration-200 ${showIcons ? "opacity-100" : "opacity-0"
+                        }`}
                     >
-                      <Pencil className="h-3 w-3" />
-                    </button>
-                    {/* Delete */}
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onDeletePreset?.(name);
-                      }}
-                      className="p-1 rounded-full bg-red-500/20 border border-red-400/30 text-red-400 hover:bg-red-500/30 transition-colors"
-                      title="Delete preset"
-                    >
-                      <Trash2 className="h-3 w-3" />
-                    </button>
-                  </div>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onEditPreset?.(name);
+                        }}
+                        className="rounded-lg p-0.5 text-cyan-300 transition-colors hover:bg-cyan-500/20 hover:text-cyan-200"
+                        title="Edit preset filters"
+                      >
+                        <Pencil className="h-3.5 w-3.5" />
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onDeletePreset?.(name);
+                        }}
+                        className="rounded-lg p-0.5 text-red-400 transition-colors hover:bg-red-500/20 hover:text-red-300"
+                        title="Delete preset"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
+                    </span>
+                  </motion.button>
                 </div>
               );
             })}
