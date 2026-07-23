@@ -10,8 +10,8 @@ export interface FilterMetric {
 }
 
 export interface Filter {
-  id: string; // unique random id
-  metricId: string; // points to FilterMetric id
+  id: string;
+  metricId: string;
   operator: OperatorType;
   value: string | number;
 }
@@ -35,5 +35,8 @@ export interface Stock {
   pe: number;
   debtEquity: number;
   aiScore: number;
-  recommendation: "Strong Buy" | "Buy" | "Hold" | "Avoid";
+  fundamentalScore: number;
+  technicalScore: number;
+  riskScore: number;
+  recommendation: "Bullish" | "Buy Zone" | "Accumulate" | "Neutral" | "Bearish";
 }

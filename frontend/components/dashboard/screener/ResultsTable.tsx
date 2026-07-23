@@ -11,11 +11,12 @@ function formatPrice(price: number): string {
   return `₹${price.toLocaleString("en-IN")}`;
 }
 
-const VERDICT_STYLES = {
-  "Strong Buy": "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
-  Buy: "bg-blue-500/15 text-blue-400 border-blue-500/30",
-  Hold: "bg-amber-500/15 text-amber-400 border-amber-500/30",
-  Avoid: "bg-red-500/15 text-red-400 border-red-500/30",
+const SIGNAL_STYLES: Record<string, string> = {
+  Bullish: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
+  "Buy Zone": "bg-blue-500/15 text-blue-400 border-blue-500/30",
+  Accumulate: "bg-cyan-500/15 text-cyan-400 border-cyan-500/30",
+  Neutral: "bg-slate-500/15 text-slate-400 border-slate-500/30",
+  Bearish: "bg-red-500/15 text-red-400 border-red-500/30",
 };
 
 interface ResultsTableProps {
@@ -57,7 +58,6 @@ export default function ResultsTable({
         <div className="absolute -top-32 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-[100px]" />
       </div>
 
-      {/* Header */}
       <div className="relative flex items-center justify-between border-b border-white/10 px-8 py-5">
         <div>
           <h3 className="text-lg font-bold text-white">Screener Results</h3>
@@ -67,83 +67,44 @@ export default function ResultsTable({
         </div>
       </div>
 
-      {/* Table grid */}
       <div className="relative overflow-x-auto">
         <table className="w-full text-left text-sm">
           <thead>
             <tr className="border-b border-white/5 text-xs uppercase tracking-wider text-slate-500">
-              <th
-                onClick={() => onSort("symbol")}
-                className="px-8 py-4 font-semibold cursor-pointer hover:text-white transition"
-              >
-                <div className="flex items-center gap-1.5">
-                  Company {renderSortArrow("symbol")}
-                </div>
+              <th onClick={() => onSort("symbol")} className="px-4 py-4 font-semibold cursor-pointer hover:text-white transition">
+                <div className="flex items-center gap-1.5">Company {renderSortArrow("symbol")}</div>
               </th>
-              <th
-                onClick={() => onSort("sector")}
-                className="px-4 py-4 font-semibold cursor-pointer hover:text-white transition"
-              >
-                <div className="flex items-center gap-1.5">
-                  Sector {renderSortArrow("sector")}
-                </div>
+              <th onClick={() => onSort("sector")} className="px-4 py-4 font-semibold cursor-pointer hover:text-white transition">
+                <div className="flex items-center gap-1.5">Sector {renderSortArrow("sector")}</div>
               </th>
-              <th
-                onClick={() => onSort("price")}
-                className="px-4 py-4 font-semibold text-right cursor-pointer hover:text-white transition"
-              >
-                <div className="flex items-center justify-end gap-1.5">
-                  Price {renderSortArrow("price")}
-                </div>
+              <th onClick={() => onSort("price")} className="px-4 py-4 font-semibold text-right cursor-pointer hover:text-white transition">
+                <div className="flex items-center justify-end gap-1.5">Price {renderSortArrow("price")}</div>
               </th>
-              <th
-                onClick={() => onSort("aiScore")}
-                className="px-4 py-4 font-semibold text-center cursor-pointer hover:text-white transition"
-              >
-                <div className="flex items-center justify-center gap-1.5">
-                  AI Score {renderSortArrow("aiScore")}
-                </div>
+              <th onClick={() => onSort("aiScore")} className="px-4 py-4 font-semibold text-center cursor-pointer hover:text-white transition">
+                <div className="flex items-center justify-center gap-1.5">Overall {renderSortArrow("aiScore")}</div>
               </th>
-              <th
-                onClick={() => onSort("pe")}
-                className="px-4 py-4 font-semibold text-right cursor-pointer hover:text-white transition"
-              >
-                <div className="flex items-center justify-end gap-1.5">
-                  PE {renderSortArrow("pe")}
-                </div>
+              <th onClick={() => onSort("fundamentalScore")} className="px-4 py-4 font-semibold text-center cursor-pointer hover:text-white transition">
+                <div className="flex items-center justify-center gap-1.5">Fundamental {renderSortArrow("fundamentalScore")}</div>
               </th>
-              <th
-                onClick={() => onSort("roe")}
-                className="px-4 py-4 font-semibold text-right cursor-pointer hover:text-white transition"
-              >
-                <div className="flex items-center justify-end gap-1.5">
-                  ROE {renderSortArrow("roe")}
-                </div>
+              <th onClick={() => onSort("technicalScore")} className="px-4 py-4 font-semibold text-center cursor-pointer hover:text-white transition">
+                <div className="flex items-center justify-center gap-1.5">Technical {renderSortArrow("technicalScore")}</div>
               </th>
-              <th
-                onClick={() => onSort("revenueGrowth")}
-                className="px-4 py-4 font-semibold text-right cursor-pointer hover:text-white transition"
-              >
-                <div className="flex items-center justify-end gap-1.5">
-                  Revenue {renderSortArrow("revenueGrowth")}
-                </div>
+              <th onClick={() => onSort("riskScore")} className="px-4 py-4 font-semibold text-center cursor-pointer hover:text-white transition">
+                <div className="flex items-center justify-center gap-1.5">Risk {renderSortArrow("riskScore")}</div>
               </th>
-              <th
-                onClick={() => onSort("debtEquity")}
-                className="px-4 py-4 font-semibold text-right cursor-pointer hover:text-white transition"
-              >
-                <div className="flex items-center justify-end gap-1.5">
-                  Debt {renderSortArrow("debtEquity")}
-                </div>
+              <th onClick={() => onSort("pe")} className="px-4 py-4 font-semibold text-right cursor-pointer hover:text-white transition">
+                <div className="flex items-center justify-end gap-1.5">P/E {renderSortArrow("pe")}</div>
               </th>
-              <th className="px-4 py-4 font-semibold text-center">Recommendation</th>
-              <th className="px-8 py-4 font-semibold text-right">View</th>
+              <th onClick={() => onSort("roe")} className="px-4 py-4 font-semibold text-right cursor-pointer hover:text-white transition">
+                <div className="flex items-center justify-end gap-1.5">ROE {renderSortArrow("roe")}</div>
+              </th>
+              <th className="px-4 py-4 font-semibold text-center">Signal</th>
+              <th className="px-6 py-4 font-semibold text-right">View</th>
             </tr>
           </thead>
           <tbody>
             {stocks.map((stock, i) => {
-              const badgeStyle = VERDICT_STYLES[stock.recommendation] || VERDICT_STYLES.Hold;
-
+              const badgeStyle = SIGNAL_STYLES[stock.recommendation] || SIGNAL_STYLES.Neutral;
               return (
                 <motion.tr
                   key={stock.symbol}
@@ -152,7 +113,7 @@ export default function ResultsTable({
                   transition={{ duration: 0.4, delay: 0.28 + i * 0.04, ease: EASE }}
                   className="group/row border-b border-white/5 transition-colors duration-300 hover:bg-white/[0.04]"
                 >
-                  <td className="px-8 py-4">
+                  <td className="px-4 py-4">
                     <div className="flex items-center gap-3">
                       <div className="flex h-9 w-9 items-center justify-center rounded-xl text-xs font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
                         {stock.symbol.slice(0, 2)}
@@ -163,42 +124,20 @@ export default function ResultsTable({
                       </div>
                     </div>
                   </td>
-
-                  <td className="px-4 py-4 text-slate-400">
-                    {stock.sector}
-                  </td>
-
-                  <td className="px-4 py-4 text-right font-semibold text-white">
-                    {formatPrice(stock.price)}
-                  </td>
-
-                  <td className="px-4 py-4 text-center font-bold text-white text-base">
-                    {stock.aiScore}
-                  </td>
-
-                  <td className="px-4 py-4 text-right font-semibold text-slate-300">
-                    {stock.pe}x
-                  </td>
-
-                  <td className="px-4 py-4 text-right font-semibold text-slate-300">
-                    {stock.roe}%
-                  </td>
-
-                  <td className="px-4 py-4 text-right font-semibold text-emerald-400">
-                    +{stock.revenueGrowth}%
-                  </td>
-
-                  <td className="px-4 py-4 text-right font-semibold text-slate-400">
-                    {stock.debtEquity}
-                  </td>
-
+                  <td className="px-4 py-4 text-slate-400">{stock.sector}</td>
+                  <td className="px-4 py-4 text-right font-semibold text-white">{formatPrice(stock.price)}</td>
+                  <td className="px-4 py-4 text-center font-bold text-white text-base">{stock.aiScore}</td>
+                  <td className="px-4 py-4 text-center font-bold text-white text-base">{stock.fundamentalScore ?? "—"}</td>
+                  <td className="px-4 py-4 text-center font-bold text-white text-base">{stock.technicalScore ?? "—"}</td>
+                  <td className="px-4 py-4 text-center font-bold text-white text-base">{stock.riskScore ?? "—"}</td>
+                  <td className="px-4 py-4 text-right font-semibold text-slate-300">{stock.pe}x</td>
+                  <td className="px-4 py-4 text-right font-semibold text-slate-300">{stock.roe}%</td>
                   <td className="px-4 py-4 text-center">
-                    <span className={`inline-block rounded-lg border px-2.5 py-1 text-xs font-bold ${badgeStyle}`}>
+                    <span className={`inline-block whitespace-nowrap rounded-lg border px-2.5 py-1 text-xs font-bold ${badgeStyle}`}>
                       {stock.recommendation}
                     </span>
                   </td>
-
-                  <td className="px-8 py-4 text-right">
+                  <td className="px-6 py-4 text-right">
                     <motion.button
                       onClick={() => onViewStock?.(stock.symbol)}
                       whileHover={{ scale: 1.06, transition: HOVER_SPRING }}

@@ -8,14 +8,13 @@ interface SaveScreenDialogProps {
   isOpen: boolean;
   onClose: () => void;
   onSave: (name: string) => void;
-  editingName?: string | null; // if provided, we are editing an existing preset
+  editingName?: string | null;
 }
 
 export default function SaveScreenDialog({ isOpen, onClose, onSave, editingName }: SaveScreenDialogProps) {
   const [screenName, setScreenName] = useState("");
   const isEditing = !!editingName;
 
-  // When editingName changes, prefill the input
   useEffect(() => {
     if (isOpen && editingName) {
       setScreenName(editingName);
@@ -37,7 +36,6 @@ export default function SaveScreenDialog({ isOpen, onClose, onSave, editingName 
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -45,18 +43,12 @@ export default function SaveScreenDialog({ isOpen, onClose, onSave, editingName 
             onClick={onClose}
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
           />
-
-          {/* Dialog Container */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 15 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 15 }}
-            className="
-              relative w-full max-w-sm rounded-3xl border border-white/10
-              bg-[#0b1220] p-6 shadow-2xl backdrop-blur-3xl z-10
-            "
+            className="relative w-full max-w-sm rounded-3xl border border-white/10 bg-[#0b1220] p-6 shadow-2xl backdrop-blur-3xl z-10"
           >
-            {/* Header */}
             <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-4">
               <h3 className="text-lg font-bold text-white flex items-center gap-2">
                 {isEditing ? (
@@ -79,7 +71,6 @@ export default function SaveScreenDialog({ isOpen, onClose, onSave, editingName 
               </button>
             </div>
 
-            {/* Input Form */}
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">

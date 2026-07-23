@@ -1,4 +1,4 @@
-export type RecommendationType = "Strong Buy" | "Buy" | "Hold" | "Avoid";
+export type RecommendationType = "Bullish" | "Buy Zone" | "Accumulate" | "Neutral" | "Bearish";
 
 export interface ScreenerStock {
   symbol: string;
@@ -6,11 +6,14 @@ export interface ScreenerStock {
   sector: string;
   marketCap: "Large Cap" | "Mid Cap" | "Small Cap";
   price: number;
-  revenueGrowth: number; // percentage
-  roe: number; // percentage
+  revenueGrowth: number;
+  roe: number;
   pe: number;
   debtEquity: number;
   aiScore: number;
+  fundamentalScore: number;
+  technicalScore: number;
+  riskScore: number;
   recommendation: RecommendationType;
 }
 
@@ -26,7 +29,10 @@ export const screenerStocks: ScreenerStock[] = [
     pe: 28,
     debtEquity: 0.05,
     aiScore: 94,
-    recommendation: "Strong Buy",
+    fundamentalScore: 85,
+    technicalScore: 72,
+    riskScore: 98,
+    recommendation: "Bullish",
   },
   {
     symbol: "INFY",
@@ -39,7 +45,10 @@ export const screenerStocks: ScreenerStock[] = [
     pe: 24,
     debtEquity: 0.08,
     aiScore: 88,
-    recommendation: "Buy",
+    fundamentalScore: 82,
+    technicalScore: 68,
+    riskScore: 93,
+    recommendation: "Buy Zone",
   },
   {
     symbol: "HDFCBANK",
@@ -52,7 +61,10 @@ export const screenerStocks: ScreenerStock[] = [
     pe: 19,
     debtEquity: 0.12,
     aiScore: 91,
-    recommendation: "Strong Buy",
+    fundamentalScore: 78,
+    technicalScore: 65,
+    riskScore: 97,
+    recommendation: "Bullish",
   },
   {
     symbol: "RELIANCE",
@@ -65,7 +77,10 @@ export const screenerStocks: ScreenerStock[] = [
     pe: 26,
     debtEquity: 0.38,
     aiScore: 84,
-    recommendation: "Buy",
+    fundamentalScore: 70,
+    technicalScore: 60,
+    riskScore: 84,
+    recommendation: "Buy Zone",
   },
   {
     symbol: "ICICIBANK",
@@ -78,7 +93,10 @@ export const screenerStocks: ScreenerStock[] = [
     pe: 18,
     debtEquity: 0.15,
     aiScore: 89,
-    recommendation: "Buy",
+    fundamentalScore: 75,
+    technicalScore: 62,
+    riskScore: 92,
+    recommendation: "Buy Zone",
   },
   {
     symbol: "WIPRO",
@@ -91,7 +109,10 @@ export const screenerStocks: ScreenerStock[] = [
     pe: 21,
     debtEquity: 0.18,
     aiScore: 52,
-    recommendation: "Avoid",
+    fundamentalScore: 45,
+    technicalScore: 40,
+    riskScore: 65,
+    recommendation: "Bearish",
   },
   {
     symbol: "SBIN",
@@ -104,7 +125,10 @@ export const screenerStocks: ScreenerStock[] = [
     pe: 10,
     debtEquity: 1.45,
     aiScore: 86,
-    recommendation: "Buy",
+    fundamentalScore: 72,
+    technicalScore: 58,
+    riskScore: 88,
+    recommendation: "Buy Zone",
   },
   {
     symbol: "BAJFINANCE",
@@ -117,7 +141,10 @@ export const screenerStocks: ScreenerStock[] = [
     pe: 36,
     debtEquity: 0.95,
     aiScore: 78,
-    recommendation: "Buy",
+    fundamentalScore: 68,
+    technicalScore: 55,
+    riskScore: 80,
+    recommendation: "Buy Zone",
   },
   {
     symbol: "TATAMOTORS",
@@ -130,7 +157,10 @@ export const screenerStocks: ScreenerStock[] = [
     pe: 16,
     debtEquity: 0.85,
     aiScore: 92,
-    recommendation: "Strong Buy",
+    fundamentalScore: 80,
+    technicalScore: 70,
+    riskScore: 90,
+    recommendation: "Bullish",
   },
   {
     symbol: "MARUTI",
@@ -143,7 +173,10 @@ export const screenerStocks: ScreenerStock[] = [
     pe: 29,
     debtEquity: 0.02,
     aiScore: 68,
-    recommendation: "Hold",
+    fundamentalScore: 62,
+    technicalScore: 48,
+    riskScore: 75,
+    recommendation: "Neutral",
   },
   {
     symbol: "KPITTECH",
@@ -156,7 +189,10 @@ export const screenerStocks: ScreenerStock[] = [
     pe: 65,
     debtEquity: 0.22,
     aiScore: 81,
-    recommendation: "Buy",
+    fundamentalScore: 74,
+    technicalScore: 63,
+    riskScore: 85,
+    recommendation: "Buy Zone",
   },
   {
     symbol: "DIXON",
@@ -169,7 +205,10 @@ export const screenerStocks: ScreenerStock[] = [
     pe: 85,
     debtEquity: 0.45,
     aiScore: 79,
-    recommendation: "Buy",
+    fundamentalScore: 70,
+    technicalScore: 58,
+    riskScore: 78,
+    recommendation: "Buy Zone",
   },
   {
     symbol: "CDSL",
@@ -182,7 +221,10 @@ export const screenerStocks: ScreenerStock[] = [
     pe: 48,
     debtEquity: 0.0,
     aiScore: 93,
-    recommendation: "Strong Buy",
+    fundamentalScore: 82,
+    technicalScore: 75,
+    riskScore: 95,
+    recommendation: "Bullish",
   },
   {
     symbol: "IRCTC",
@@ -195,7 +237,10 @@ export const screenerStocks: ScreenerStock[] = [
     pe: 55,
     debtEquity: 0.05,
     aiScore: 71,
-    recommendation: "Hold",
+    fundamentalScore: 65,
+    technicalScore: 50,
+    riskScore: 72,
+    recommendation: "Neutral",
   },
   {
     symbol: "ZOMATO",
@@ -208,7 +253,10 @@ export const screenerStocks: ScreenerStock[] = [
     pe: 120,
     debtEquity: 0.01,
     aiScore: 73,
-    recommendation: "Hold",
+    fundamentalScore: 60,
+    technicalScore: 45,
+    riskScore: 68,
+    recommendation: "Neutral",
   },
   {
     symbol: "IDEA",
@@ -221,7 +269,10 @@ export const screenerStocks: ScreenerStock[] = [
     pe: -5,
     debtEquity: 8.5,
     aiScore: 35,
-    recommendation: "Avoid",
+    fundamentalScore: 20,
+    technicalScore: 15,
+    riskScore: 30,
+    recommendation: "Bearish",
   },
   {
     symbol: "SUZLON",
@@ -234,7 +285,10 @@ export const screenerStocks: ScreenerStock[] = [
     pe: 140,
     debtEquity: 0.6,
     aiScore: 61,
-    recommendation: "Hold",
+    fundamentalScore: 55,
+    technicalScore: 42,
+    riskScore: 65,
+    recommendation: "Neutral",
   },
   {
     symbol: "TATACOMM",
@@ -247,13 +301,17 @@ export const screenerStocks: ScreenerStock[] = [
     pe: 28,
     debtEquity: 1.1,
     aiScore: 76,
-    recommendation: "Buy",
+    fundamentalScore: 68,
+    technicalScore: 54,
+    riskScore: 79,
+    recommendation: "Buy Zone",
   },
 ];
 
 export function getRecommendationForScore(score: number): RecommendationType {
-  if (score >= 90) return "Strong Buy";
-  if (score >= 75) return "Buy";
-  if (score >= 60) return "Hold";
-  return "Avoid";
+  if (score >= 90) return "Bullish";
+  if (score >= 75) return "Buy Zone";
+  if (score >= 60) return "Accumulate";
+  if (score >= 40) return "Neutral";
+  return "Bearish";
 }

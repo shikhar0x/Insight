@@ -24,7 +24,6 @@ export default function SearchBar({ searchQuery, onSearchChange, onAIPrompt }: S
 
   return (
     <div className="space-y-6">
-      {/* Search Input */}
       <div className="relative">
         <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
         <input
@@ -36,7 +35,6 @@ export default function SearchBar({ searchQuery, onSearchChange, onAIPrompt }: S
         />
       </div>
 
-      {/* AI Prompt Box (Section 8: AI Prompt Builder) */}
       <form
         onSubmit={handleAIPromptSubmit}
         className="rounded-3xl border border-cyan-400/20 bg-white/[0.04] p-6 backdrop-blur-3xl shadow-[0_8px_40px_rgba(0,0,0,0.35)]"

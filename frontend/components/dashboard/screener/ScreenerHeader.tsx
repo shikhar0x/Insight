@@ -13,7 +13,6 @@ interface ScreenerHeaderProps {
 export default function ScreenerHeader({ onBack, onSaveScreen }: ScreenerHeaderProps) {
   return (
     <div>
-      {/* Top Row: Pill Badge only - removed arrows */}
       <div className="flex items-center justify-between">
         <div className="inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-500/10 px-4 py-1.5 text-sm font-medium text-cyan-300 backdrop-blur-xl">
           <SlidersHorizontal className="h-4 w-4" />

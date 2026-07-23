@@ -96,7 +96,6 @@ export default function QuickPresets({
 
   return (
     <div className="space-y-4">
-      {/* Quick Presets */}
       <div className="space-y-3">
         <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
           Quick Presets
@@ -119,7 +118,6 @@ export default function QuickPresets({
         </div>
       </div>
 
-      {/* Custom Screens - using div instead of button to avoid nested buttons */}
       {customPresets.length > 0 && (
         <div className="space-y-3 pt-2">
           <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
@@ -147,15 +145,13 @@ export default function QuickPresets({
                       }`}
                   >
                     <span
-                      className={`transition-opacity duration-200 ${showIcons ? "opacity-0" : "opacity-100"
-                        }`}
+                      className={`transition-opacity duration-200 ${showIcons ? "opacity-0" : "opacity-100"}`}
                     >
                       {name}
                     </span>
 
                     <span
-                      className={`absolute inset-0 flex items-center justify-center gap-2 transition-opacity duration-200 ${showIcons ? "opacity-100" : "opacity-0"
-                        }`}
+                      className={`absolute inset-0 flex items-center justify-center gap-2 transition-opacity duration-200 ${showIcons ? "opacity-100" : "opacity-0"}`}
                     >
                       <button
                         onClick={(e) => {
