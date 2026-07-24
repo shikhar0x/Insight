@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Trash2, Plus } from "lucide-react";
+import { Trash2, Plus, RotateCcw } from "lucide-react";
 import { motion } from "framer-motion";
 import type { Filter, FilterMetric, OperatorType } from "./types";
 import AddFilterModal from "./AddFilterModal";
@@ -18,15 +18,16 @@ export const AVAILABLE_METRICS: FilterMetric[] = [
   { id: "revenueGrowth", name: "Revenue Growth (%)", category: "Growth", type: "number", placeholder: "e.g. 10" },
   { id: "epsGrowth", name: "EPS Growth (%)", category: "Growth", type: "number", placeholder: "e.g. 12" },
   { id: "debtEquity", name: "Debt to Equity", category: "Risk", type: "number", placeholder: "e.g. 0.5" },
-  { id: "marketCap", name: "Market Cap", category: "Financial", type: "string", placeholder: "Large Cap, Mid Cap, Small Cap" },
-  { id: "sector", name: "Sector", category: "Financial", type: "string", placeholder: "e.g. IT Services" },
+  { id: "marketCap", name: "Market Cap", category: "Financial", type: "select", placeholder: "Select market cap", options: ["Large Cap", "Mid Cap", "Small Cap"] },
+  { id: "sector", name: "Sector", category: "Financial", type: "select", placeholder: "Select sector", options: ["IT Services", "Banking & Financials", "Conglomerate", "Automotive", "Electronics", "Financial Services", "Consumer Services", "Telecom", "Energy"] },
 ];
 
 interface FilterBuilderProps {
   filters: Filter[];
-  onAddFilter?: (metric: FilterMetric, operator: OperatorType, value: string | number) => void; // ✅ made optional
+  onAddFilter?: (metric: FilterMetric, operator: OperatorType, value: string | number) => void;
   onUpdateFilter: (id: string, updates: Partial<Filter>) => void;
   onRemoveFilter: (id: string) => void;
+  onClearAll?: () => void;
 }
 
 const operatorSymbols: Record<OperatorType, string> = {
@@ -42,6 +43,7 @@ export default function FilterBuilder({
   onAddFilter,
   onUpdateFilter,
   onRemoveFilter,
+  onClearAll,
 }: FilterBuilderProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingFilter, setEditingFilter] = useState<Filter | null>(null);
@@ -88,15 +90,32 @@ export default function FilterBuilder({
         <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
           Active Filter Conditions
         </h3>
-        <motion.button
-          onClick={handleAddClick}
-          whileHover={{ scale: 1.04, transition: HOVER_SPRING }}
-          whileTap={{ scale: 0.96 }}
-          className="flex items-center gap-1.5 rounded-xl border border-cyan-400/20 bg-cyan-500/10 px-3 py-1.5 text-xs font-bold text-cyan-300 transition hover:bg-cyan-500/20"
-        >
-          <Plus className="h-3.5 w-3.5" />
-          Add Filter
-        </motion.button>
+        <div className="flex items-center gap-2">
+          <motion.button
+            onClick={onClearAll}
+            disabled={filters.length === 0}
+            whileHover={filters.length > 0 ? { scale: 1.04, transition: HOVER_SPRING } : {}}
+            whileTap={filters.length > 0 ? { scale: 0.96 } : {}}
+            className={`flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-xs font-bold transition-all duration-200 ${
+              filters.length > 0
+                ? "border-red-500/20 bg-red-500/10 text-red-400 hover:bg-red-500/20 hover:border-red-500/30 cursor-pointer"
+                : "border-white/5 bg-white/[0.02] text-slate-600 cursor-not-allowed opacity-50"
+            }`}
+            title="Clear all active filters"
+          >
+            <RotateCcw className="h-3.5 w-3.5" />
+            Clear All
+          </motion.button>
+          <motion.button
+            onClick={handleAddClick}
+            whileHover={{ scale: 1.04, transition: HOVER_SPRING }}
+            whileTap={{ scale: 0.96 }}
+            className="flex items-center gap-1.5 rounded-xl border border-cyan-400/20 bg-cyan-500/10 px-3 py-1.5 text-xs font-bold text-cyan-300 transition hover:bg-cyan-500/20"
+          >
+            <Plus className="h-3.5 w-3.5" />
+            Add Filter
+          </motion.button>
+        </div>
       </div>
 
       {filters.length === 0 ? (

@@ -16,6 +16,7 @@ import {
     EyeOff,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import CustomSelect from "@/components/dashboard/screener/CustomSelect";
 
 // Mock user data (should come from auth context in production)
 const USER_DATA = {
@@ -43,75 +44,19 @@ function ThemeDropdown({
     value: string;
     onChange: (val: string) => void;
 }) {
-    const [isOpen, setIsOpen] = useState(false);
-    const dropdownRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        function handleClickOutside(e: MouseEvent) {
-            if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-                setIsOpen(false);
-            }
-        }
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, []);
-
     const options = [
         { label: "Dark", value: "dark" },
         { label: "Light", value: "light" },
     ];
 
-    const selectedLabel = options.find((opt) => opt.value === value)?.label || "Dark";
-
     return (
-        <div className="relative" ref={dropdownRef}>
-            <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="flex items-center gap-2 rounded-xl border border-white/10 bg-black/40 px-4 py-2 text-sm text-white outline-none focus:border-cyan-400/50"
-            >
-                <span>{selectedLabel}</span>
-                {/* Custom SVG arrow with rounded tips */}
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
-                >
-                    <polyline points="6 9 12 15 18 9" />
-                </svg>
-            </button>
-
-            <AnimatePresence>
-                {isOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, y: -8, scale: 0.96 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: -8, scale: 0.96 }}
-                        transition={{ duration: 0.15, ease: [0.16, 1, 0.3, 1] }}
-                        className="absolute left-0 top-full mt-2 w-32 rounded-xl border border-white/10 bg-[#0B1220] shadow-2xl backdrop-blur-3xl z-10 overflow-hidden"
-                    >
-                        {options.map((opt) => (
-                            <button
-                                key={opt.value}
-                                onClick={() => {
-                                    onChange(opt.value);
-                                    setIsOpen(false);
-                                }}
-                                className={`block w-full px-4 py-2.5 text-left text-sm transition-colors hover:bg-white/5 ${opt.value === value ? "text-cyan-400 font-semibold" : "text-slate-300"
-                                    }`}
-                            >
-                                {opt.label}
-                            </button>
-                        ))}
-                    </motion.div>
-                )}
-            </AnimatePresence>
+        <div className="w-32">
+            <CustomSelect
+                value={value}
+                onChange={onChange}
+                options={options}
+                placeholder="Theme"
+            />
         </div>
     );
 }

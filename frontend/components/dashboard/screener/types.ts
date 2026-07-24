@@ -4,9 +4,10 @@ export interface FilterMetric {
   id: string;
   name: string;
   category: "AI Metrics" | "Financial" | "Valuation" | "Technical" | "Growth" | "Risk";
-  type: "number" | "string";
+  type: "number" | "string" | "select";
   placeholder?: string;
   defaultValue?: string | number;
+  options?: string[];
 }
 
 export interface Filter {

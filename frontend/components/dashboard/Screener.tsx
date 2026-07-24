@@ -335,6 +335,7 @@ export default function Screener({ onBack, onViewStock }: ScreenerProps) {
           onUpdateFilter={handleUpdateFilter}
           onRemoveFilter={handleRemoveFilter}
           onAddFilter={handleAddFilter}
+          onClearAll={handleResetFilters}
         />
 
         {sortedStocks.length > 0 ? (

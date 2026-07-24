@@ -4,6 +4,15 @@ import { useState, useEffect, useCallback } from "react";
 import { X, Search } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { FilterMetric, OperatorType, Filter } from "./types";
+import CustomSelect from "./CustomSelect";
+
+const OPERATOR_OPTIONS = [
+  { value: ">", label: "Greater than (>)" },
+  { value: "<", label: "Less than (<)" },
+  { value: "=", label: "Equals (=)" },
+  { value: ">=", label: "Greater or equal (>=)" },
+  { value: "<=", label: "Less or equal (<=)" },
+];
 
 interface AddFilterModalProps {
   isOpen: boolean;
@@ -54,6 +63,13 @@ export default function AddFilterModal({
   }, [editingFilter, isOpen]);
 
   const selectedMetric = availableMetrics.find(m => m.id === selectedMetricId);
+
+  // Auto-set operator to "=" for select-type metrics
+  useEffect(() => {
+    if (selectedMetric?.type === "select") {
+      setOperator("=");
+    }
+  }, [selectedMetricId, selectedMetric?.type]);
 
   // When adding a new filter, hide metrics that are already active
   const metricsToShow = isEditing
@@ -139,23 +155,42 @@ export default function AddFilterModal({
                 </div>
               </div>
 
-              {selectedMetric && (
+              {selectedMetric && selectedMetric.type === "select" ? (
+                <div className="space-y-3">
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+                      Condition
+                    </label>
+                    <div className="rounded-xl border border-white/10 bg-black/40 px-3.5 py-2.5 text-sm text-slate-400 font-medium">
+                      equals (=)
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+                      Value
+                    </label>
+                    <CustomSelect
+                      value={String(value)}
+                      onChange={(val) => {
+                        setValue(val);
+                        setOperator("=");
+                      }}
+                      options={selectedMetric.options || []}
+                      placeholder={selectedMetric.placeholder || "Select a value"}
+                    />
+                  </div>
+                </div>
+              ) : selectedMetric ? (
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
                       Operator
                     </label>
-                    <select
+                    <CustomSelect
                       value={operator}
-                      onChange={(e) => setOperator(e.target.value as OperatorType)}
-                      className="w-full rounded-xl border border-white/10 bg-black/40 px-3 py-2 text-sm text-white outline-none focus:border-cyan-400/50 [&>option]:bg-[#0B1220]"
-                    >
-                      <option value=">">&gt;</option>
-                      <option value="<">&lt;</option>
-                      <option value="=">=</option>
-                      <option value=">=">&gt;=</option>
-                      <option value="<=">&lt;=</option>
-                    </select>
+                      onChange={(val) => setOperator(val as OperatorType)}
+                      options={OPERATOR_OPTIONS}
+                    />
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
@@ -166,12 +201,12 @@ export default function AddFilterModal({
                       value={value}
                       onChange={(e) => setValue(e.target.value)}
                       placeholder={selectedMetric.placeholder || "Enter value"}
-                      className="w-full rounded-xl border border-white/10 bg-black/40 px-3 py-2 text-sm text-white outline-none focus:border-cyan-400/50"
+                      className="w-full rounded-xl border border-white/10 bg-black/40 px-3.5 py-2.5 text-sm text-white outline-none focus:border-cyan-400/50"
                       step="any"
                     />
                   </div>
                 </div>
-              )}
+              ) : null}
 
               <div className="flex justify-end gap-3 pt-4">
                 <button
